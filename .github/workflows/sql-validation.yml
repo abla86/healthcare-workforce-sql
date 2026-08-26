@@ -22,4 +22,9 @@ jobs:
       - name: Install SQLFluff
         run: pip install sqlfluff==4.3.0
       - name: Parse T-SQL
-        run: sqlfluff parse --dialect tsql setup.sql sql
+        shell: bash
+        run: |
+          for sql_file in setup.sql sql/*.sql; do
+            echo "Parsing $sql_file"
+            sqlfluff parse --dialect tsql "$sql_file" >/dev/null
+          done
