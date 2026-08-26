@@ -1,108 +1,70 @@
 # Healthcare Workforce SQL
 
-Relational SQL Server project for workforce, shift and competence planning.
+A Microsoft SQL Server project that models workforce, shift and competence planning using fictional demonstration data.
 
 ## Purpose
 
-The project models staffing and competence requirements for healthcare shifts.
+The project demonstrates relational database design and SQL analysis for staffing and competence requirements in healthcare-oriented scenarios.
 
-It demonstrates relational database design and practical SQL analysis using fictional workforce data.
+## Implemented
 
-## Features
-
-- Employees
-- Roles
-- Position percentages
-- Competencies
-- Many-to-many employee competency relationships
+- Employee, role and position-percentage data
+- Competencies and employee–competency many-to-many relationships
 - Day, evening and night shifts
 - Minimum staffing requirements
 - Competence requirements per shift
 - Employee shift assignments
-- Foreign keys
-- CHECK constraints
-- UNIQUE constraints
-- Indexes
-- Views
-- Aggregate queries
-- JOIN queries
-- Filtering
-- Staffing gap analysis
-- Competence coverage analysis
-- Employee hour calculations
+- Foreign keys, `CHECK` constraints, `UNIQUE` constraints and indexes
+- Views for shift coverage and employee hours
+- Aggregate, JOIN and filtering queries
+- Staffing-gap analysis
+- Competence-coverage analysis
+- Employee-hour calculations
 - Stored procedure
 - Validation queries
+
+## Structure
+
+```text
+setup.sql
+sql/
+├── 01-create-database.sql
+├── 02-schema.sql
+├── 03-seed-data.sql
+├── 04-views.sql
+├── 05-analysis-queries.sql
+├── 06-stored-procedure.sql
+└── 07-validation.sql
+```
 
 ## Database
 
 Microsoft SQL Server
 
-Database name:
+Database name: `HealthWorkforceDb`
 
-HealthWorkforceDb
+## Example analysis
 
-## Project structure
-
-sql/
-- 01-create-database.sql
-- 02-schema.sql
-- 03-seed-data.sql
-- 04-views.sql
-- 05-analysis-queries.sql
-- 06-stored-procedure.sql
-- 07-validation.sql
-
-setup.sql
-
-## Main tables
-
-Employees
-
-Competencies
-
-EmployeeCompetencies
-
-Shifts
-
-ShiftRequirements
-
-ShiftAssignments
-
-## Views
-
-vw_ShiftCoverage
-
-Shows minimum staffing, assigned staffing and whether a shift is adequately staffed.
-
-vw_EmployeeHours
-
-Calculates planned hours for each employee.
-
-## Example analyses
-
-The project can identify:
-
-- understaffed shifts
-- missing competence coverage
-- employee workload
-- employees with specific competencies
-- staffing by date and shift type
-
-## Sample data
-
-All names and workforce information in this repository are fictional demonstration data.
-
-No patient data is included.
+The SQL scripts can identify understaffed shifts, missing competence coverage, employee workload and employees with specific competencies.
 
 ## Run
 
-Example with SQL Server LocalDB:
+Example using SQL Server LocalDB:
 
+```powershell
 sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i setup.sql
-
-Run analysis queries:
-
 sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i sql\05-analysis-queries.sql
+```
+
+## Data and scope
+
+All workforce names and records are fictional demonstration data. No patient data is included.
+
+This is a database-design and analysis project. It is not presented as a production workforce-management system or a validated clinical decision-support system.
+
+## Portfolio evidence
+
+The project demonstrates relational modelling, constraints, indexing, views, stored procedures and practical SQL analysis.
 
 ## Author
 
