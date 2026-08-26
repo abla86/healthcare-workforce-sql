@@ -9,7 +9,7 @@ The project demonstrates relational database design and SQL analysis for staffin
 ## Implemented
 
 - Employee, role and position-percentage data
-- Competencies and employee–competency many-to-many relationships
+- Competencies and employeeâ€“competency many-to-many relationships
 - Day, evening and night shifts
 - Minimum staffing requirements
 - Competence requirements per shift
@@ -28,13 +28,13 @@ The project demonstrates relational database design and SQL analysis for staffin
 ```text
 setup.sql
 sql/
-├── 01-create-database.sql
-├── 02-schema.sql
-├── 03-seed-data.sql
-├── 04-views.sql
-├── 05-analysis-queries.sql
-├── 06-stored-procedure.sql
-└── 07-validation.sql
+â”œâ”€â”€ 01-create-database.sql
+â”œâ”€â”€ 02-schema.sql
+â”œâ”€â”€ 03-seed-data.sql
+â”œâ”€â”€ 04-views.sql
+â”œâ”€â”€ 05-analysis-queries.sql
+â”œâ”€â”€ 06-stored-procedure.sql
+â””â”€â”€ 07-validation.sql
 ```
 
 ## Database
