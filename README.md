@@ -6,6 +6,12 @@ A Microsoft SQL Server project that models workforce, shift and competence plann
 
 The project demonstrates relational database design and SQL analysis for staffing and competence requirements in healthcare-oriented scenarios.
 
+## Verification
+
+[![SQL Validation](https://github.com/abla86/healthcare-workforce-sql/actions/workflows/sql-validation.yml/badge.svg)](https://github.com/abla86/healthcare-workforce-sql/actions/workflows/sql-validation.yml)
+
+Baseline CI parses the repository SQL as T-SQL with SQLFluff. This verifies parser-level syntax consistency; it does not replace execution against a SQL Server instance.
+
 ## Implemented
 
 - Employee, role and position-percentage data
@@ -64,7 +70,7 @@ This is a database-design and analysis project. It is not presented as a product
 
 ## Portfolio evidence
 
-The project demonstrates relational modelling, constraints, indexing, views, stored procedures and practical SQL analysis.
+The project demonstrates relational modelling, constraints, indexing, views, stored procedures, practical SQL analysis and automated parser-level verification.
 
 ## Author
 
@@ -72,4 +78,4 @@ Anne Beth Andersen
 
 ## Status
 
-This repository is part of the ABLA86 engineering portfolio. Current implementation status is represented by the code and repository history.
+This repository is part of the ABLA86 engineering portfolio. Current implementation status is represented by the code, repository history and CI verification.
