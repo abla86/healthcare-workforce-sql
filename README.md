@@ -9,7 +9,7 @@ The project demonstrates relational database design and SQL analysis for staffin
 ## Implemented
 
 - Employee, role and position-percentage data
-- Competencies and employeeÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“competency many-to-many relationships
+- Competencies and employee–competency many-to-many relationships
 - Day, evening and night shifts
 - Minimum staffing requirements
 - Competence requirements per shift
@@ -28,13 +28,13 @@ The project demonstrates relational database design and SQL analysis for staffin
 ```text
 setup.sql
 sql/
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 01-create-database.sql
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 02-schema.sql
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 03-seed-data.sql
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 04-views.sql
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 05-analysis-queries.sql
-ÃƒÂ¢Ã¢â‚¬ÂÃ…â€œÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 06-stored-procedure.sql
-ÃƒÂ¢Ã¢â‚¬ÂÃ¢â‚¬ÂÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ 07-validation.sql
+├── 01-create-database.sql
+├── 02-schema.sql
+├── 03-seed-data.sql
+├── 04-views.sql
+├── 05-analysis-queries.sql
+├── 06-stored-procedure.sql
+└── 07-validation.sql
 ```
 
 ## Database
@@ -69,6 +69,7 @@ The project demonstrates relational modelling, constraints, indexing, views, sto
 ## Author
 
 Anne Beth Andersen
+
 ## Status
 
 This repository is part of the ABLA86 engineering portfolio. Current implementation status is represented by the code and repository history.
