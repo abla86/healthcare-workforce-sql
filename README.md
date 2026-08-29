@@ -1,81 +1,42 @@
-# Healthcare Workforce SQL
+# Healthcare Workforce SQL — Data Layer for Workforce Domain
 
-A Microsoft SQL Server project that models workforce, shift and competence planning using fictional demonstration data.
+A Microsoft SQL Server project modelling workforce, shift and competence planning with fictional demonstration data.
 
-## Purpose
+## Portfolio role
 
-The project demonstrates relational database design and SQL analysis for staffing and competence requirements in healthcare-oriented scenarios.
+**Supporting data-layer project.** This repository complements the active **Workforce & Competence Management** platform. It is kept separate because it demonstrates a distinct technical capability: relational database design and T-SQL analysis. It is not presented as a second workforce application.
 
-## Verification
+## Demonstrated technical scope
 
-[![SQL Validation](https://github.com/abla86/healthcare-workforce-sql/actions/workflows/sql-validation.yml/badge.svg)](https://github.com/abla86/healthcare-workforce-sql/actions/workflows/sql-validation.yml)
-
-Baseline CI parses the repository SQL as T-SQL with SQLFluff. This verifies parser-level syntax consistency; it does not replace execution against a SQL Server instance.
-
-## Implemented
-
-- Employee, role and position-percentage data
-- Competencies and employee–competency many-to-many relationships
-- Day, evening and night shifts
-- Minimum staffing requirements
-- Competence requirements per shift
-- Employee shift assignments
-- Foreign keys, `CHECK` constraints, `UNIQUE` constraints and indexes
-- Views for shift coverage and employee hours
-- Aggregate, JOIN and filtering queries
-- Staffing-gap analysis
-- Competence-coverage analysis
-- Employee-hour calculations
-- Stored procedure
-- Validation queries
-
-## Structure
-
-```text
-setup.sql
-sql/
-├── 01-create-database.sql
-├── 02-schema.sql
-├── 03-seed-data.sql
-├── 04-views.sql
-├── 05-analysis-queries.sql
-├── 06-stored-procedure.sql
-└── 07-validation.sql
-```
+- relational data modelling
+- employee, role, shift and competence relationships
+- many-to-many modelling
+- foreign keys, `CHECK`, `UNIQUE` constraints and indexes
+- SQL views
+- stored procedure
+- JOIN, aggregation and filtering queries
+- staffing-gap analysis
+- competence-coverage analysis
+- employee-hour calculations
+- validation queries
+- parser-level CI validation with SQLFluff
 
 ## Database
 
-Microsoft SQL Server
+Microsoft SQL Server. The checked-in scripts define the demonstration schema and analysis workload.
 
-Database name: `HealthWorkforceDb`
+## Verification boundary
 
-## Example analysis
+Baseline CI parses the repository SQL as T-SQL with SQLFluff. Parser-level validation does not by itself prove execution against a SQL Server instance.
 
-The SQL scripts can identify understaffed shifts, missing competence coverage, employee workload and employees with specific competencies.
+## Data and safety
 
-## Run
+All workforce names and records are fictional demonstration data. No patient data is included. This is a database-design and analysis project, not a production workforce-management or clinical decision-support system.
 
-Example using SQL Server LocalDB:
+## Portfolio
 
-```powershell
-sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i setup.sql
-sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i sql\05-analysis-queries.sql
-```
+https://abla86.github.io/developer-portfolio/
 
-## Data and scope
+## Change-control audit
 
-All workforce names and records are fictional demonstration data. No patient data is included.
-
-This is a database-design and analysis project. It is not presented as a production workforce-management system or a validated clinical decision-support system.
-
-## Portfolio evidence
-
-The project demonstrates relational modelling, constraints, indexing, views, stored procedures, practical SQL analysis and automated parser-level verification.
-
-## Author
-
-Anne Beth Andersen
-
-## Status
-
-This repository is part of the ABLA86 engineering portfolio. Current implementation status is represented by the code, repository history and CI verification.
+Use repository history and CI results as the source of implementation and verification evidence.
