@@ -24,7 +24,18 @@ jobs:
       - name: Parse T-SQL
         shell: bash
         run: |
-          for sql_file in setup.sql sql/*.sql; do
+          files=()
+          [[ -f setup.sql ]] && files+=(setup.sql)
+          while IFS= read -r -d '' sql_file; do
+            files+=( "$sql_file" )
+          done < <(find sql -type f -name '*.sql' -print0 2>/dev/null || true)
+
+          if (( ${#files[@]} == 0 )); then
+            echo "No SQL files found to parse."
+            exit 0
+          fi
+
+          for sql_file in "${files[@]}"; do
             echo "Parsing $sql_file"
             sqlfluff parse --dialect tsql "$sql_file" >/dev/null
           done
