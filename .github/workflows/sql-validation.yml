@@ -41,7 +41,25 @@ jobs:
                   print(f" - {path}")
               raise SystemExit(1)
 
-          print("All sqlcmd include references resolve to existing files.")
+          expected = [
+              "sql/01-create-database.sql",
+              "sql/02-schema.sql",
+              "sql/03-seed.sql",
+              "sql/04-views.sql",
+              "sql/06-stored-procedure.sql",
+              "sql/07-validation.sql",
+          ]
+          actual = [
+              Path(raw.strip().strip('"')).as_posix().replace("\\", "/")
+              for raw in re.findall(r"^\\s*:r\\s+(.+?)\\s*$", setup, flags=re.MULTILINE)
+          ]
+          if actual != expected:
+              print("Unexpected setup.sql include order:")
+              print("Expected:", expected)
+              print("Actual:  ", actual)
+              raise SystemExit(1)
+
+          print("All sqlcmd include references resolve and setup order is valid.")
           PY
 
       - name: Parse T-SQL
