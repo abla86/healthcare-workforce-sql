@@ -80,3 +80,54 @@ jobs:
             echo "Parsing $sql_file"
             sqlfluff parse --dialect tsql "$sql_file" >/dev/null
           done
+
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: "Str0ng_Test_Passw0rd!"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd="/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Str0ng_Test_Passw0rd! -C -Q 'SELECT 1' || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install sqlcmd
+        shell: bash
+        run: |
+          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
+          curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/prod.list |             sed 's#^deb #deb [signed-by=/usr/share/keyrings/microsoft-prod.gpg] #' |             sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18
+          echo "/opt/mssql-tools18/bin" >> "$GITHUB_PATH"
+
+      - name: Wait for SQL Server
+        shell: bash
+        env:
+          SQLCMDPASSWORD: "Str0ng_Test_Passw0rd!"
+        run: |
+          for attempt in {1..30}; do
+            if sqlcmd -S localhost,1433 -U sa -C -Q "SELECT 1" >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "SQL Server did not become ready."
+          exit 1
+
+      - name: Run setup and validation against SQL Server
+        shell: bash
+        env:
+          SQLCMDPASSWORD: "Str0ng_Test_Passw0rd!"
+        run: |
+          sqlcmd -S localhost,1433 -U sa -C -b -i setup.sql
