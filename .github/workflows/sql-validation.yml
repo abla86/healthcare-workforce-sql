@@ -21,6 +21,29 @@ jobs:
           python-version: '3.12'
       - name: Install SQLFluff
         run: pip install sqlfluff==4.3.0
+      - name: Validate sqlcmd include references
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          setup = Path("setup.sql").read_text(encoding="utf-8")
+          missing = []
+          for raw in re.findall(r"^\\s*:r\\s+(.+?)\\s*$", setup, flags=re.MULTILINE):
+              include_path = Path(raw.strip().strip('"')).as_posix().replace("\\", "/")
+              if not Path(include_path).is_file():
+                  missing.append(include_path)
+
+          if missing:
+              print("Missing sqlcmd include files:")
+              for path in missing:
+                  print(f" - {path}")
+              raise SystemExit(1)
+
+          print("All sqlcmd include references resolve to existing files.")
+          PY
+
       - name: Parse T-SQL
         shell: bash
         run: |
