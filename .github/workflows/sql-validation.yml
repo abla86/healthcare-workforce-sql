@@ -30,11 +30,12 @@ jobs:
 
           setup = Path("setup.sql").read_text(encoding="utf-8")
           include_pattern = r"^\s*:r\s+(.+?)\s*$"
-          missing = []
-          for raw in re.findall(include_pattern, setup, flags=re.MULTILINE):
-              include_path = Path(raw.strip().strip('"')).as_posix().replace("\\", "/")
-              if not Path(include_path).is_file():
-                  missing.append(include_path)
+
+          def normalize_include(raw: str) -> str:
+              return Path(raw.strip().strip('"').replace("\\", "/")).as_posix()
+
+          includes = [normalize_include(raw) for raw in re.findall(include_pattern, setup, flags=re.MULTILINE)]
+          missing = [path for path in includes if not Path(path).is_file()]
 
           if missing:
               print("Missing sqlcmd include files:")
@@ -50,14 +51,10 @@ jobs:
               "sql/06-stored-procedure.sql",
               "sql/07-validation.sql",
           ]
-          actual = [
-              Path(raw.strip().strip('"')).as_posix().replace("\\", "/")
-              for raw in re.findall(include_pattern, setup, flags=re.MULTILINE)
-          ]
-          if actual != expected:
+          if includes != expected:
               print("Unexpected setup.sql include order:")
               print("Expected:", expected)
-              print("Actual:  ", actual)
+              print("Actual:  ", includes)
               raise SystemExit(1)
 
           print("All sqlcmd include references resolve and setup order is valid.")
