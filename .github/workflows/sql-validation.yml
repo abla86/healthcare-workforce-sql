@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install SQLFluff
-        run: pip install sqlfluff==4.3.0
+        run: pip install --disable-pip-version-check sqlfluff==4.3.0
       - name: Validate sqlcmd include references
         shell: bash
         run: |
@@ -29,8 +29,9 @@ jobs:
           from pathlib import Path
 
           setup = Path("setup.sql").read_text(encoding="utf-8")
+          include_pattern = r"^\s*:r\s+(.+?)\s*$"
           missing = []
-          for raw in re.findall(r"^\\s*:r\\s+(.+?)\\s*$", setup, flags=re.MULTILINE):
+          for raw in re.findall(include_pattern, setup, flags=re.MULTILINE):
               include_path = Path(raw.strip().strip('"')).as_posix().replace("\\", "/")
               if not Path(include_path).is_file():
                   missing.append(include_path)
@@ -51,7 +52,7 @@ jobs:
           ]
           actual = [
               Path(raw.strip().strip('"')).as_posix().replace("\\", "/")
-              for raw in re.findall(r"^\\s*:r\\s+(.+?)\\s*$", setup, flags=re.MULTILINE)
+              for raw in re.findall(include_pattern, setup, flags=re.MULTILINE)
           ]
           if actual != expected:
               print("Unexpected setup.sql include order:")
@@ -81,7 +82,6 @@ jobs:
             sqlfluff parse --dialect tsql "$sql_file" >/dev/null
           done
 
-
   integration:
     runs-on: ubuntu-latest
     services:
@@ -105,8 +105,8 @@ jobs:
       - name: Install sqlcmd
         shell: bash
         run: |
-          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
-          curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/prod.list |             sed 's#^deb #deb [signed-by=/usr/share/keyrings/microsoft-prod.gpg] #' |             sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+          curl -fsSLo /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
+          sudo dpkg -i /tmp/packages-microsoft-prod.deb
           sudo apt-get update
           sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18
           echo "/opt/mssql-tools18/bin" >> "$GITHUB_PATH"
